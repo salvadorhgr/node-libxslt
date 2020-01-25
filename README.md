@@ -22,7 +22,7 @@ Installation
 
 From source:
 
-    git clone https://github.com/albanm/node-libxslt.git
+    git clone https://github.com/theNBS/node-libxslt.git
       git submodule update --init
       npm install
       npm test
