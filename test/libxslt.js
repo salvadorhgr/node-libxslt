@@ -48,7 +48,7 @@ describe('node-libxslt', function() {
 		});
 	});
 
-	describe('asynchronous parse function', function() {
+	describe('callback parse function', function() {
 		it('should parse a stylesheet from a libxslt.libxmljs xml document', function(callback) {
 			var stylesheetDoc = libxslt.libxmljs.parseXml(stylesheetSource);
 			libxslt.parse(stylesheetDoc, function(err, stylesheet) {
@@ -141,7 +141,7 @@ describe('node-libxslt', function() {
 		});*/
 	});
 
-	describe('asynchronous apply function', function() {
+	describe('callback apply function', function() {
 		it('should apply a stylesheet to a libxslt.libxmljs xml document', function(callback) {
 			var doc = libxslt.libxmljs.parseXml(docSource);
 			var stylesheet = libxslt.parse(stylesheetSource);
