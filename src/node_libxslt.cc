@@ -80,8 +80,15 @@ char** PrepareParams(Local<Array> array) {
     memset(params, 0, sizeof(char *) * (array->Length() + 1));
     for (unsigned int i = 0; i < array->Length(); i++) {
         Local<String> param = Nan::To<String>(array->Get(Nan::New<Integer>(i))).ToLocalChecked();
-        params[i] = (char *)malloc(sizeof(char) * (param->Utf8Length(v8::Isolate::GetCurrent()) + 1));
-        param->WriteUtf8(v8::Isolate::GetCurrent(), params[i]);
+        
+        // fallback for < Node 8
+        #if (NODE_MODULE_VERSION > 57)
+            params[i] = (char *)malloc(sizeof(char) * (param->Utf8Length(v8::Isolate::GetCurrent()) + 1));
+            param->WriteUtf8(v8::Isolate::GetCurrent(), params[i]);
+        #else
+            params[i] = (char *)malloc(sizeof(char) * (param->Utf8Length() + 1));
+            param->WriteUtf8(params[i]);
+        #endif
     }
     return params;
 }
