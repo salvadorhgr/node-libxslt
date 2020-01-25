@@ -4,7 +4,7 @@
  */
 
 var fs = require('fs');
-var libxmljs = require('libxmljs2');
+var libxmljs = require('libxmljs');
 var binding = require('bindings')('node-libxslt');
 
 binding.registerEXSLT();
