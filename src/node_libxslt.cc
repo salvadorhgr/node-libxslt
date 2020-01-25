@@ -91,7 +91,13 @@ NAN_METHOD(ApplySync) {
     Stylesheet* stylesheet = Nan::ObjectWrap::Unwrap<Stylesheet>(Nan::To<Object>(info[0]).ToLocalChecked());
     libxmljs::XmlDocument* docSource = Nan::ObjectWrap::Unwrap<libxmljs::XmlDocument>(Nan::To<Object>(info[1]).ToLocalChecked());
     Local<Array> paramsArray = Local<Array>::Cast(info[2]);
-    bool outputString = (Nan::To<Boolean>(info[3]).ToLocalChecked())->BooleanValue(v8::Isolate::GetCurrent());
+
+    // fallback for < Node 12
+    #if (NODE_MODULE_VERSION > 64)
+        bool outputString = (Nan::To<Boolean>(info[3]).ToLocalChecked())->BooleanValue(v8::Isolate::GetCurrent());
+    #else
+        bool outputString = (Nan::To<Boolean>(info[3]).ToLocalChecked())->BooleanValue();
+    #endif
 
     char** params = PrepareParams(paramsArray);
 
