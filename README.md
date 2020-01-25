@@ -5,12 +5,12 @@ node-libxslt
 
 Node.js bindings for [libxslt](http://xmlsoft.org/libxslt/) compatible with [libxmljs](https://github.com/libxmljs/libxmljs).
 
-This fork restores the dependency of the node-libxslt on [libxmljs](https://github.com/libxmljs/libxmljs) rather than
-the Multi Threaded fork of it [libxmljs-mt](https://github.com/gagern/libxmljs). This was for a couple of reasons:
+This fork restores the dependency of node-libxslt on [libxmljs](https://github.com/libxmljs/libxmljs) rather than
+the Multi Threaded fork of it ([libxmljs-mt](https://github.com/gagern/libxmljs)). This was for a couple of reasons:
 
 1. libxmljs-mt appears to no longer be manintaning, wereas libxmljs is - as such it compiles with Node.js v12.
 2. In our usage of the library - we don't need any of the async operations
-3. We don't have very complex XSLT stylesheets - and none that include otherwise
+3. We don't have very complex XSLT stylesheets - and none that include other XSLT's
 
 This fork keeps the callback implementation of `parse` and `apply` but both have been refactored to call the
 synchronous libxmljs methods.
@@ -19,6 +19,13 @@ Installation
 ------------
 
 	npm install libxslt
+
+From source:
+
+    git clone https://github.com/albanm/node-libxslt.git
+      git submodule update --init
+      npm install
+      npm test
 
 Basic usage
 -----------
@@ -102,7 +109,9 @@ The libxmljs module. Prevents the need for a user's code to require it a second 
 <a name="module_libxslt.parse"></a>
 
 ### libxslt.parse(source, [callback]) ⇒ <code>Stylesheet</code>
-Parse a XSL stylesheetIf no callback is given the function will run synchronously and return the result or throw an error.
+Parse a XSL stylesheet
+
+If no callback is given the function will run synchronously and return the result or throw an error.
 
 **Kind**: static method of [<code>libxslt</code>](#module_libxslt)  
 **Returns**: <code>Stylesheet</code> - Only if no callback is given.  
@@ -137,7 +146,10 @@ Parse a XSL stylesheet
 <a name="new_module_libxslt..Stylesheet_new"></a>
 
 #### new Stylesheet(stylesheetDoc, stylesheetObj)
-A compiled stylesheet. Do not call this constructor, instead use parse or parseFile.store both the source document and the parsed stylesheetif we don't store the stylesheet doc it will be deleted by garbage collector and it will result in segfaults.
+A compiled stylesheet. Do not call this constructor, instead use parse or parseFile.
+
+store both the source document and the parsed stylesheet
+if we don't store the stylesheet doc it will be deleted by garbage collector and it will result in segfaults.
 
 
 | Param | Type | Description |
@@ -148,7 +160,9 @@ A compiled stylesheet. Do not call this constructor, instead use parse or parseF
 <a name="module_libxslt..Stylesheet+apply"></a>
 
 #### stylesheet.apply(source, [params], [options], [callback]) ⇒ <code>string</code> \| <code>Document</code>
-Apply a stylesheet to a XML documentIf no callback is given the function will run synchronously and return the result or throw an error.
+Apply a stylesheet to a XML document
+
+If no callback is given the function will run synchronously and return the result or throw an error.
 
 **Kind**: instance method of [<code>Stylesheet</code>](#module_libxslt..Stylesheet)  
 **Returns**: <code>string</code> \| <code>Document</code> - Only if no callback is given. Type is the same as the source param.  
