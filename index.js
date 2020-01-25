@@ -50,10 +50,11 @@ exports.parse = function(source, callback) {
 	}
 
 	if (callback) {
-		binding.stylesheetAsync(source, function(err, stylesheet){
-			if (err) return callback(err);
-			callback(null, new Stylesheet(source, stylesheet));
-		});
+		try {
+			return callback(null, new Stylesheet(source, binding.stylesheetSync(source)));
+		} catch (err) {
+			return callback(err);
+		}
 	} else {
 		return new Stylesheet(source, binding.stylesheetSync(source));
 	}
@@ -155,10 +156,12 @@ Stylesheet.prototype.apply = function(source, params, options, callback) {
 	var docResult = new libxmljs.Document();
 
 	if (callback) {
-		binding.applyAsync(this.stylesheetObj, source, paramsArray, outputString, docResult, function(err, strResult){
-			if (err) return callback(err);
-			callback(null, outputString ? strResult : docResult);
-		});
+		try {
+			var strResult = binding.applySync(this.stylesheetObj, source, paramsArray, outputString, docResult);
+			return callback(null, outputString ? strResult : docResult);
+		} catch (err) {
+			return callback(err);
+		}
 	} else {
 		var strResult = binding.applySync(this.stylesheetObj, source, paramsArray, outputString, docResult);
 		return outputString ? strResult : docResult;
