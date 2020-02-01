@@ -1,19 +1,21 @@
 node-libxslt
 ============
 
-[![Build status](https://travis-ci.org/theNBS/node-libxslt.svg)](https://travis-ci.org/theNBS/node-libxslt)
+[![Build status](https://travis-ci.org/theNBS/node-libxslt.svg?branch=master)](https://travis-ci.org/theNBS/node-libxslt)
 
 Node.js bindings for [libxslt](http://xmlsoft.org/libxslt/) compatible with [libxmljs](https://github.com/libxmljs/libxmljs).
 
 This fork restores the dependency of node-libxslt on [libxmljs](https://github.com/libxmljs/libxmljs) rather than
-the Multi Threaded fork of it ([libxmljs-mt](https://github.com/gagern/libxmljs)). This was for a couple of reasons:
+the Multi Threaded fork ([libxmljs-mt](https://github.com/gagern/libxmljs)). This was for a couple of reasons:
 
-1. libxmljs-mt appears to no longer be manintaning, wereas libxmljs is - as such it compiles with Node.js v12.
+1. libxmljs-mt appears to no longer be manintaned, wereas libxmljs is - as such it compiles with Node.js v12.
 2. In our usage of the library - we don't need any of the async operations
 3. We don't have very complex XSLT stylesheets - and none that include other XSLT's
 
 This fork keeps the callback implementation of `parse` and `apply` but both have been refactored to call the
 synchronous libxmljs methods.
+
+The fork should compile successfully on Node 8 -> 13.
 
 Installation
 ------------

@@ -79,7 +79,8 @@ char** PrepareParams(Local<Array> array) {
     char** params = (char **)malloc(sizeof(char *) * (arrayLen + 1));
     memset(params, 0, sizeof(char *) * (array->Length() + 1));
     for (unsigned int i = 0; i < array->Length(); i++) {
-        Local<String> param = Nan::To<String>(array->Get(Nan::New<Integer>(i))).ToLocalChecked();
+        Local<Value> value = array->Get(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New<Integer>(i)).ToLocalChecked();
+        Local<String> param = Nan::To<String>(value).ToLocalChecked();
         
         // fallback for < Node 8
         #if (NODE_MODULE_VERSION > 57)
