@@ -1,6 +1,6 @@
 {
   "name": "libxslt",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Node.js bindings for libxslt compatible with libxmljs",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "bindings": "^1.5.0",
-    "libxmljs2": "^0.25.0",
+    "libxmljs2": "^0.23.0",
     "nan": "~2.14.0"
   },
   "devDependencies": {
